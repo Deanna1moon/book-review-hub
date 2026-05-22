@@ -24,6 +24,18 @@
   </head>
 
   <body>
+
+  <% if notice %>
+  <p style="background: lightgreen; padding: 10px;">
+    <%= notice %>
+  </p>
+<% end %>
+
+<% if alert %>
+  <p style="background: pink; padding: 10px;">
+    <%= alert %>
+  </p>
+<% end %>
     <%= yield %>
   </body>
 </html>

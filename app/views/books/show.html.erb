@@ -1,0 +1,100 @@
+<div class="max-w-4xl mx-auto p-6">
+
+  <h1 class="text-4xl font-bold mb-4">
+    <%= @book.title %>
+  </h1>
+
+  <p>
+    <strong>Author:</strong>
+    <%= @book.author %>
+  </p>
+
+  <br>
+
+  <p>
+    <strong>Genre:</strong>
+    <%= @book.genre %>
+  </p>
+
+  <br>
+
+  <p>
+    <strong>Description:</strong>
+  </p>
+
+  <p>
+    <%= @book.description %>
+  </p>
+
+  <br><br>
+
+  <%= link_to "Back to Books", books_path %>
+<br><br>
+
+<%= link_to "Edit Book", edit_book_path(@book) %>
+
+<br><br>
+
+<%= button_to "Delete Book",
+      @book,
+      method: :delete,
+      data: { turbo_confirm: "Are you sure?" } %>
+</div>
+
+<hr>
+
+<h2>Add Review</h2>
+
+<%= form_with model: [@book, Review.new] do |form| %>
+
+  <div>
+    <%= form.label :reviewer_name %><br>
+    <%= form.text_field :reviewer_name %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :rating %><br>
+    <%= form.number_field :rating %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :comment %><br>
+    <%= form.text_area :comment %>
+  </div>
+
+  <br>
+
+  <%= form.submit "Add Review" %>
+
+<% end %>
+
+<hr>
+
+<h2>Reviews</h2>
+
+<% @book.reviews.each do |review| %>
+
+  <div style="border:1px solid gray; padding:10px; margin-bottom:10px;">
+
+    <p>
+      <strong>Name:</strong>
+      <%= review.reviewer_name %>
+    </p>
+
+    <p>
+      <strong>Rating:</strong>
+      <%= review.rating %>/5
+    </p>
+
+    <p>
+      <strong>Comment:</strong>
+      <%= review.comment %>
+    </p>
+
+  </div>
+
+<% end %>

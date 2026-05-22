@@ -1,0 +1,37 @@
+<h1>Add a New Book</h1>
+
+<%= form_with model: @book do |form| %>
+
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :author %><br>
+    <%= form.text_field :author %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :genre %><br>
+    <%= form.text_field :genre %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit "Create Book" %>
+  </div>
+
+<% end %>

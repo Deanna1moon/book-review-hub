@@ -1,0 +1,63 @@
+<div class="max-w-6xl mx-auto p-6">
+
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-900">
+      📚 Book Review Hub
+    </h1>
+
+    <%= link_to "Add Book",
+        new_book_path,
+        class: "bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-lg shadow" %>
+  </div>
+
+  <% if @books.any? %>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <% @books.each do |book| %>
+
+        <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
+
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">
+            <%= book.title %>
+          </h2>
+
+          <p class="text-gray-600 mb-2">
+            ✍️ <%= book.author %>
+          </p>
+
+          <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-semibold uppercase">
+            <%= book.genre %>
+          </span>
+
+          <p class="text-gray-500 mt-4 line-clamp-3">
+            <%= book.description %>
+          </p>
+
+          <div class="mt-6">
+            <%= link_to "View Book",
+                book_path(book),
+                class: "text-blue-600 hover:underline font-semibold" %>
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="bg-white rounded-xl shadow p-10 text-center">
+      <p class="text-gray-500 text-lg mb-4">
+        No books added yet.
+      </p>
+
+      <%= link_to "Add Your First Book",
+          new_book_path,
+          class: "text-blue-600 font-bold hover:underline" %>
+    </div>
+
+  <% end %>
+
+</div>
