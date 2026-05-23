@@ -23,6 +23,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
+
+  <%= button_to "Logout",
+      logout_path,
+      method: :delete %>
   <body>
 
   <% if notice %>
