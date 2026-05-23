@@ -1,7 +1,7 @@
 class Review < ApplicationRecord
   belongs_to :book
+  belongs_to :user
 
-  validates :reviewer_name, presence: true
   validates :comment, presence: true
   validates :rating,
             presence: true,
