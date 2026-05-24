@@ -11,6 +11,51 @@
 
     <%= yield :head %>
 
+    <%# Tailwind CSS via CDN - REDESIGN: Added for purple-themed modern frontend %>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <%# Custom Tailwind config for purple theme %>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // REDESIGN: Purple-themed color palette
+              'purple': {
+                '50': '#faf5ff',
+                '100': '#f3e8ff',
+                '200': '#e9d5ff',
+                '300': '#d8b4fe',
+                '400': '#c4b5fd',
+                '500': '#a78bfa',
+                '600': '#9333ea',
+                '700': '#7e22ce',
+                '800': '#6b21a8',
+                '900': '#581c87',
+              },
+              'lavender': {
+                '50': '#f5f3ff',
+                '100': '#ede9fe',
+                '200': '#ddd6fe',
+                '300': '#c4b5fd',
+                '400': '#a78bfa',
+              }
+            },
+            boxShadow: {
+              // REDESIGN: Enhanced shadows for card effects
+              'glow': '0 0 20px rgba(147, 51, 234, 0.2)',
+              'glow-lg': '0 0 40px rgba(147, 51, 234, 0.3)',
+            },
+            backgroundImage: {
+              // REDESIGN: Gradient backgrounds
+              'gradient-purple': 'linear-gradient(135deg, #7e22ce 0%, #a78bfa 100%)',
+              'gradient-dark': 'linear-gradient(135deg, #2d1b4e 0%, #1e1033 100%)',
+            }
+          }
+        }
+      }
+    </script>
+
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
@@ -23,23 +68,75 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <body class="bg-slate-50 text-gray-900">
+    <!-- REDESIGN: Modern navigation bar with purple theme -->
+    <nav class="bg-gradient-dark border-b border-purple-500/20 sticky top-0 z-50 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          
+          <!-- Logo/Brand -->
+          <div class="flex items-center space-x-3">
+            <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              📚 Book Hub
+            </div>
+          </div>
 
-  <%= button_to "Logout",
-      logout_path,
-      method: :delete %>
-  <body>
+          <!-- Navigation Links -->
+          <div class="hidden md:flex items-center space-x-8">
+            <%= link_to "Home", root_path, class: "text-gray-300 hover:text-purple-400 transition font-medium" %>
+            <%= link_to "Browse Books", books_path, class: "text-gray-300 hover:text-purple-400 transition font-medium" %>
+            
+            <% if current_user %>
+              <span class="text-gray-400 text-sm">|</span>
+              <span class="text-gray-300 text-sm"><%= current_user.email %></span>
+            <% end %>
+          </div>
 
-  <% if notice %>
-  <p style="background: lightgreen; padding: 10px;">
-    <%= notice %>
-  </p>
-<% end %>
+          <!-- Auth Buttons -->
+          <div class="flex items-center space-x-3">
+            <% if current_user %>
+              <%= button_to "Logout",
+                  logout_path,
+                  method: :delete,
+                  class: "px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition" %>
+            <% else %>
+              <%= link_to "Login", login_path, class: "px-4 py-2 text-purple-400 hover:text-purple-300 font-semibold transition" %>
+              <%= link_to "Sign Up", new_user_path, class: "px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-<% if alert %>
-  <p style="background: pink; padding: 10px;">
-    <%= alert %>
-  </p>
-<% end %>
-    <%= yield %>
+    <!-- REDESIGN: Flash messages with gradient styling -->
+    <% if notice %>
+      <div class="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-3 shadow-lg">
+        <div class="max-w-7xl mx-auto flex items-center space-x-3">
+          <span class="text-xl">✓</span>
+          <p class="font-semibold"><%= notice %></p>
+        </div>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="bg-gradient-to-r from-red-400 to-rose-500 text-white px-6 py-3 shadow-lg">
+        <div class="max-w-7xl mx-auto flex items-center space-x-3">
+          <span class="text-xl">✕</span>
+          <p class="font-semibold"><%= alert %></p>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
+      <%= yield %>
+    </main>
+
+    <!-- REDESIGN: Footer -->
+    <footer class="bg-gradient-dark border-t border-purple-500/20 mt-20 py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+        <p class="text-sm">© 2026 Book Review Hub. Share your reading love. ✨</p>
+      </div>
+    </footer>
   </body>
 </html>

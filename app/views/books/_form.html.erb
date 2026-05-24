@@ -1,0 +1,171 @@
+<!-- REDESIGN: Reusable book form partial with purple theme -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    
+    <!-- REDESIGN: Back button -->
+    <%= link_to "← Back to Books",
+        books_path,
+        class: "inline-flex items-center text-purple-400 hover:text-purple-300 font-semibold mb-8 transition" %>
+
+    <!-- Form Container -->
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl p-8 md:p-12 border border-purple-500/20">
+      <!-- Gradient accent -->
+      <div class="h-1 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-full mb-8"></div>
+
+      <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300 mb-8">
+        <%= @book.persisted? ? "✏️ Edit Book" : "📚 Add New Book" %>
+      </h1>
+
+      <%= form_with model: @book, local: true, class: "space-y-6" do |form| %>
+        
+        <!-- Error messages if any -->
+        <% if @book.errors.any? %>
+          <div class="bg-red-900/30 border border-red-500/50 rounded-xl p-4">
+            <h3 class="text-red-300 font-bold mb-2">⚠️ Please fix the following errors:</h3>
+            <ul class="text-red-200 space-y-1">
+              <% @book.errors.full_messages.each do |message| %>
+                <li>• <%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Title Field -->
+        <div>
+          <label class="block text-purple-300 font-semibold mb-3 text-lg">Book Title</label>
+          <%= form.text_field :title,
+              placeholder: "Enter the book title",
+              class: "w-full px-4 py-3 bg-gray-700 text-white placeholder-gray-500 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition" %>
+        </div>
+
+        <!-- Author Field -->
+        <div>
+          <label class="block text-purple-300 font-semibold mb-3 text-lg">Author</label>
+          <%= form.text_field :author,
+              placeholder: "e.g., J.K. Rowling",
+              class: "w-full px-4 py-3 bg-gray-700 text-white placeholder-gray-500 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition" %>
+        </div>
+
+        <!-- Genre Field - Multiple Genre Support -->
+        <div>
+          <label class="block text-purple-300 font-semibold mb-3 text-lg">Genres (select or type custom)</label>
+          
+          <!-- Quick select genre buttons -->
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4" id="genre-quick-select">
+            <% ["Fantasy", "Mystery", "Romance", "Sci-Fi", "Thriller", "Biography", "Horror", "Drama", "Adventure"].each do |genre| %>
+              <button type="button" class="genre-btn px-4 py-2 rounded-lg border border-purple-500/30 text-gray-300 hover:text-purple-300 hover:bg-purple-900/30 transition" data-genre="<%= genre %>">
+                <%= genre %>
+              </button>
+            <% end %>
+          </div>
+
+          <!-- Selected genres display -->
+          <div id="selected-genres" class="mb-4 flex flex-wrap gap-2">
+            <!-- Selected genre badges will appear here -->
+          </div>
+
+          <!-- Genre input field -->
+          <%= form.text_field :genre,
+              placeholder: "Enter genres separated by commas (e.g., Fantasy, Adventure, Magic)",
+              class: "w-full px-4 py-3 bg-gray-700 text-white placeholder-gray-500 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition",
+              id: "genre-input" %>
+          <p class="text-gray-400 text-sm mt-2">💡 Tip: Click genre buttons to add them, or type your own separated by commas</p>
+          
+          <script>
+            // REDESIGN: Multiple genre selection with custom genres
+            (function() {
+              const genreInput = document.getElementById('genre-input');
+              const selectedGenresContainer = document.getElementById('selected-genres');
+              const quickSelectButtons = document.querySelectorAll('.genre-btn');
+              
+              let selectedGenres = new Set();
+
+              // Initialize from existing input
+              function initializeGenres() {
+                const currentValue = genreInput.value.trim();
+                selectedGenres.clear();
+                if (currentValue) {
+                  currentValue.split(',').forEach(g => {
+                    const trimmed = g.trim();
+                    if (trimmed) selectedGenres.add(trimmed);
+                  });
+                }
+                updateDisplay();
+              }
+
+              // Update display and input value
+              function updateDisplay() {
+                // Update genre input
+                genreInput.value = Array.from(selectedGenres).join(', ');
+
+                // Update selected genres badges
+                selectedGenresContainer.innerHTML = '';
+                selectedGenres.forEach(genre => {
+                  const badge = document.createElement('span');
+                  badge.className = 'inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-full';
+                  badge.innerHTML = `${genre} <button type="button" class="ml-1 hover:brightness-125" data-genre="${genre}">✕</button>`;
+                  
+                  const removeBtn = badge.querySelector('button');
+                  removeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    selectedGenres.delete(genre);
+                    updateDisplay();
+                  });
+                  
+                  selectedGenresContainer.appendChild(badge);
+                });
+
+                // Update button highlights
+                quickSelectButtons.forEach(btn => {
+                  if (selectedGenres.has(btn.dataset.genre)) {
+                    btn.classList.add('bg-purple-900/50', 'border-purple-400', 'text-purple-200');
+                  } else {
+                    btn.classList.remove('bg-purple-900/50', 'border-purple-400', 'text-purple-200');
+                  }
+                });
+              }
+
+              // Quick select buttons
+              quickSelectButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  const genre = btn.dataset.genre;
+                  if (selectedGenres.has(genre)) {
+                    selectedGenres.delete(genre);
+                  } else {
+                    selectedGenres.add(genre);
+                  }
+                  updateDisplay();
+                });
+              });
+
+              // Update on input change
+              genreInput.addEventListener('change', initializeGenres);
+
+              // Initialize on page load
+              initializeGenres();
+            })();
+          </script>
+        </div>
+
+        <!-- Description Field -->
+        <div>
+          <label class="block text-purple-300 font-semibold mb-3 text-lg">Description</label>
+          <%= form.text_area :description,
+              rows: 8,
+              placeholder: "Write a compelling description of the book. Include plot summary, themes, and why you recommend it...",
+              class: "w-full px-4 py-3 bg-gray-700 text-white placeholder-gray-500 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition resize-none" %>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-6">
+          <%= form.submit @book.persisted? ? "💾 Update Book" : "✨ Create Book", class: "flex-1 px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-lg transition transform hover:scale-105" %>
+          
+          <%= link_to "❌ Cancel",
+              books_path,
+              class: "flex-1 text-center px-6 py-4 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg transition" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
