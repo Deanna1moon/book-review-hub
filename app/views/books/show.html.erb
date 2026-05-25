@@ -98,11 +98,11 @@
           <!-- Owner Actions -->
           <% if current_user && @book.user_id == current_user.id %>
             <div class="flex flex-col sm:flex-row gap-3 pt-4">
-              <%= link_to "Edit Tome",
+              <%= link_to "Edit Book",
                   edit_book_path(@book),
                   class: "flex-1 text-center px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg transition-colors duration-200" %>
 
-              <%= button_to "Remove Tome",
+              <%= button_to "Remove Book",
                   @book,
                   method: :delete,
                   data: { turbo_confirm: "This cannot be undone. Are you certain?" },
@@ -191,7 +191,7 @@
               <label class="block text-indigo-200 font-semibold mb-3">Your Thoughts</label>
               <%= form.text_area :comment,
                   rows: 5,
-                  placeholder: "Share your impressions of this tome...",
+                  placeholder: "Share your impressions of this b...",
                   class: "w-full px-4 py-3 bg-slate-700 text-white placeholder-slate-500 border border-indigo-500/30 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20" %>
             </div>
 
