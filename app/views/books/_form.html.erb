@@ -16,7 +16,7 @@
         <%= @book.persisted? ? "✏️ Edit Book" : "📚 Add New Book" %>
       </h1>
 
-      <%= form_with model: @book, local: true, class: "space-y-6" do |form| %>
+   <%= form_with model: book, local: true, multipart: true do |form| %>
         
         <!-- Error messages if any -->
         <% if @book.errors.any? %>
@@ -29,6 +29,39 @@
             </ul>
           </div>
         <% end %>
+
+        <!-- Book Cover Image Upload -->
+        <div>
+          <label class="block text-purple-300 font-semibold mb-3 text-lg">📖 Book Cover (Optional)</label>
+          
+          <!-- Cover preview -->
+            <% if @book.cover_image.attached? %>
+
+            <div class="mb-4">
+                <%= image_tag @book.cover_image,
+                    class: "w-40 h-60 object-cover rounded-xl shadow-xl border border-purple-500/30" %>
+            </div>
+
+            <div class="mb-6">
+                <%= form.label :cover_image, "Replace Cover Image",
+                    class: "block text-purple-300 font-semibold mb-2" %>
+
+                <%= form.file_field :cover_image,
+                    class: "text-white" %>
+            </div>
+
+            <% else %>
+
+            <div class="mb-6">
+                <%= form.label :cover_image,
+                    class: "block text-purple-300 font-semibold mb-2" %>
+
+                <%= form.file_field :cover_image,
+                    class: "text-white" %>
+            </div>
+
+            <% end %>
+        </div>
 
         <!-- Title Field -->
         <div>

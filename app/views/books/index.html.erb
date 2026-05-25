@@ -1,81 +1,146 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-  <!-- REDESIGN: Hero Section -->
-  <div class="max-w-7xl mx-auto px-4 py-16 sm:py-24">
-    <div class="text-center mb-16">
-      <h1 class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-purple-200 to-pink-300 mb-4">
-        📚 Discover Amazing Books
+<style>
+  @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+  @keyframes drift { 0%, 100% { transform: translateX(0px) rotate(0deg); } 50% { transform: translateX(20px) rotate(15deg); } }
+  @keyframes drift-reverse { 0%, 100% { transform: translateX(0px) rotate(0deg); } 50% { transform: translateX(-20px) rotate(-15deg); } }
+  @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(10deg); } }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-drift { animation: drift 20s ease-in-out infinite; }
+  .animate-drift-rev { animation: drift-reverse 25s ease-in-out infinite; }
+  .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+  
+  .leaf { position: fixed; opacity: 0.25; pointer-events: none; font-size: 2.5rem; }
+  .leaf-drift { animation: drift 20s ease-in-out infinite; }
+  .leaf-drift-rev { animation: drift-reverse 25s ease-in-out infinite; }
+  .leaf-float { animation: float-slow 12s ease-in-out infinite; }
+  
+  .ice-shape { position: absolute; opacity: 0.15; }
+  .ice-1 { width: 150px; height: 150px; background: conic-gradient(from 0deg, rgba(34,211,238,0.3), rgba(99,102,241,0.2), rgba(34,211,238,0.3)); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); animation: float 20s ease-in-out infinite; }
+  .ice-2 { width: 120px; height: 120px; background: conic-gradient(from 45deg, rgba(99,102,241,0.25), rgba(34,211,238,0.25)); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); animation: float-slow 15s ease-in-out infinite reverse; }
+  .ice-3 { width: 180px; height: 180px; background: radial-gradient(circle, rgba(34,211,238,0.2), transparent); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); animation: drift 30s linear infinite; }
+  
+  .glow-orb { position: absolute; border-radius: 50%; }
+  .glow-1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(34,211,238,0.12) 0%, transparent 70%); top: -150px; left: -150px; }
+  .glow-2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%); bottom: -100px; right: -120px; }
+  .glow-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%); top: 50%; left: 10%; }
+</style>
+
+<div class="min-h-screen bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-950 relative overflow-hidden">
+  <!-- Decorative Glows -->
+  <div class="glow-orb glow-1"></div>
+  <div class="glow-orb glow-2"></div>
+  <div class="glow-orb glow-3"></div>
+  
+  <!-- Animated Leaves - Multiple scattered -->
+  <div class="leaf leaf-drift" style="top: 5%; left: 8%;">🍂</div>
+  <div class="leaf leaf-drift-rev" style="top: 15%; right: 12%;">🍃</div>
+  <div class="leaf leaf-float" style="top: 25%; left: 15%;">🌿</div>
+  <div class="leaf leaf-drift" style="top: 35%; right: 5%;">🍂</div>
+  <div class="leaf leaf-drift-rev" style="top: 45%; left: 5%;">🍃</div>
+  <div class="leaf leaf-float" style="top: 55%; right: 15%;">🌿</div>
+  <div class="leaf leaf-drift" style="top: 65%; left: 10%;">🍂</div>
+  <div class="leaf leaf-drift-rev" style="top: 75%; right: 8%;">🍃</div>
+  <div class="leaf leaf-float" style="top: 85%; left: 20%;">🌿</div>
+  <div class="leaf leaf-drift" style="bottom: 10%; right: 10%;">🍂</div>
+  
+  <!-- Ice Shapes -->
+  <div class="ice-shape ice-1" style="top: 10%; right: 15%;"></div>
+  <div class="ice-shape ice-2" style="top: 40%; left: 8%;"></div>
+  <div class="ice-shape ice-3" style="bottom: 20%; right: 5%;"></div>
+  <div class="ice-shape ice-1" style="top: 60%; left: 15%; animation-direction: reverse;"></div>
+  
+  <!-- Hero Section -->
+  <div class="max-w-7xl mx-auto px-4 py-20 sm:py-28 relative z-10">
+    <div class="text-center mb-20">
+      <div class="inline-block mb-6 animate-float">
+        <svg class="w-12 h-12 text-cyan-300" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 3h8v16H3V3zm10 0h8v16h-8V3zM4 4v14h6V4H4zm10 0v14h6V4h-6z"/>
+          <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1" rx="1" opacity="0.5"/>
+        </svg>
+      </div>
+      <h1 class="text-6xl md:text-7xl font-bold mb-4 text-white tracking-tight">
+        Book Hub
       </h1>
-      <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-        Explore our collection of books, share your reviews, and connect with other readers
+      <p class="text-lg text-indigo-200 mb-10 max-w-2xl mx-auto font-light">
+        Discover stories and share your thoughts
       </p>
       
-      <!-- REDESIGN: Add Book Button with gradient -->
-      <%= link_to "➕ Add Your Book",
+      <%= link_to "Add Book",
           new_book_path,
-          class: "inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-xl shadow-lg hover:shadow-glow-lg transition transform hover:scale-105" %>
+          class: "inline-block px-8 py-3 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5" %>
     </div>
 
     <% if @books.any? %>
-      <!-- REDESIGN: Grid layout with book cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <% @books.each do |book| %>
-          <!-- REDESIGN: Book card resembles book cover with elevated design -->
-          <div class="group relative">
-            <!-- Book card with hover effect -->
-            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-glow-lg transition-all duration-300 transform group-hover:scale-105 border border-purple-500/20">
+      <div class="space-y-12 relative z-10">
+        <!-- Bookshelf Display -->
+        <% @books.in_groups_of(5) do |shelf_books| %>
+          <div class="space-y-2">
+            <!-- Shelf Wood Texture -->
+            <div class="relative">
+              <!-- Shadow/depth effect -->
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-900/10 to-indigo-900/30 rounded-lg blur-sm"></div>
               
-              <!-- REDESIGN: Gradient accent top -->
-              <div class="h-1 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600"></div>
+              <!-- Shelf Line -->
+              <div class="relative h-1 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-full shadow-lg" style="box-shadow: inset 0 1px 3px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);"></div>
+            </div>
+            
+            <!-- Books on Shelf -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 pt-6 pb-8 px-4">
+              <% shelf_books.each do |book| %>
+                <% next unless book %>
+                <div class="group cursor-pointer">
+                  <%= link_to book_path(book), class: "block" do %>
+                    <div class="space-y-3 transform transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-2">
+                      <!-- Book with Shadow (sitting on shelf) -->
+                      <div class="relative">
+                        <!-- Magical aura -->
+                        <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 blur-lg group-hover:blur-xl transition-all duration-300"></div>
+                        
+                        <!-- Book Shadow -->
+                        <div class="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-b from-black/30 to-transparent rounded-full blur-md"></div>
+                        
+                        <% if book.cover_image.attached? %>
+                          <div class="relative h-80 rounded-lg overflow-hidden shadow-xl border border-indigo-500/40 group-hover:border-cyan-400/60 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-cyan-500/30">
+                            <%= image_tag book.cover_image,
+                                class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
+                                alt: book.title %>
+                            <!-- Overlay shimmer -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          </div>
+                        <% else %>
+                          <div class="relative h-80 rounded-lg bg-gradient-to-br from-indigo-800 via-indigo-900 to-indigo-950 border border-indigo-500/40 shadow-lg flex items-center justify-center group-hover:from-indigo-700 group-hover:via-indigo-800 group-hover:to-indigo-900 group-hover:border-cyan-400/60 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-cyan-500/30">
+                            <!-- Floating magical shapes -->
+                            <div class="relative w-16 h-16 animate-float">
+                              <div class="absolute inset-0 rounded-full border border-cyan-400/30 opacity-50"></div>
+                              <div class="absolute inset-2 rounded-full border border-indigo-400/30 opacity-30"></div>
+                              <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-60">◆</div>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
 
-              <div class="p-6">
-                <!-- Book Title -->
-                <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-300 transition line-clamp-2">
-                  <%= book.title %>
-                </h2>
-
-                <!-- Author with icon -->
-                <p class="text-purple-300 mb-3 flex items-center space-x-2">
-                  <span>✍️</span>
-                  <span class="font-semibold"><%= book.author %></span>
-                </p>
-
-                <!-- Genre badge -->
-                <div class="mb-4">
-                  <span class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs px-4 py-2 rounded-full font-semibold uppercase tracking-wider">
-                    <%= book.genre %>
-                  </span>
+                      <!-- Book Info Card -->
+                      <div class="bg-slate-800/70 backdrop-blur-sm rounded-lg p-3 border border-indigo-400/30 hover:border-cyan-400/50 transition-all duration-200 hover:bg-slate-800/90">
+                        <p class="text-sm font-semibold text-indigo-50 line-clamp-2"><%= book.title %></p>
+                        <p class="text-xs text-indigo-300 line-clamp-1 mt-1"><%= book.author %></p>
+                        <p class="text-xs text-cyan-400 font-medium mt-2"><%= book.genre %></p>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-
-                <!-- Description -->
-                <p class="text-gray-300 mb-6 line-clamp-3 leading-relaxed">
-                  <%= book.description %>
-                </p>
-
-                <!-- REDESIGN: Added Reviews count -->
-                <div class="text-sm text-gray-400 mb-4 flex items-center space-x-1">
-                  <span>⭐</span>
-                  <span><%= book.reviews.count %> review<%= 's' if book.reviews.count != 1 %></span>
-                </div>
-
-                <!-- Action button -->
-                <%= link_to "View Details →",
-                    book_path(book),
-                    class: "inline-block w-full text-center py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-lg transition transform hover:translate-x-1" %>
-              </div>
+              <% end %>
             </div>
           </div>
         <% end %>
       </div>
 
     <% else %>
-      <!-- REDESIGN: Empty state with engaging message -->
-      <div class="text-center py-24">
-        <div class="text-6xl mb-4">📖</div>
-        <h2 class="text-3xl font-bold text-gray-300 mb-4">No books yet</h2>
-        <p class="text-gray-400 mb-8 text-lg">Be the first to add a book to our collection!</p>
+      <div class="text-center py-24 relative z-10">
+        <div class="text-5xl mb-4 animate-float">✨</div>
+        <h2 class="text-4xl font-bold text-indigo-100 mb-3">No books yet</h2>
+        <p class="text-indigo-300 mb-10 text-lg">Start your collection</p>
         <%= link_to "Add First Book",
             new_book_path,
-            class: "inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-xl transition transform hover:scale-105" %>
+            class: "inline-block px-8 py-3 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-semibold rounded-lg transition-all duration-200 transform hover:-translate-y-0.5" %>
       </div>
     <% end %>
   </div>
